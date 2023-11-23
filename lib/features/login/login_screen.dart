@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Column(
                               children: [
                                 TextFieldWidget(
-                                    hintText: "Email",
+                                    hintText: "Email",labelText: "Email",
                                     controller: prov.loginEmailController,
                                     validate: (value) {
                                       return prov.validateLoginForm(
@@ -69,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 TextFieldWidget(
                                     hintText: "Password",
+                                    labelText: "Password",
                                     controller: prov.loginPasswordController,
                                     validate: (value) {
                                       return prov.validateLoginForm(

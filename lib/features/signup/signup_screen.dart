@@ -61,26 +61,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         key: prov.signUpKey,
                           child: Column(
                             children: [
-                              TextFieldWidget(hintText: "Full Name",controller: prov.fullNameController,
+                              TextFieldWidget(hintText: "Full Name",labelText: "Full name",controller: prov.fullNameController,
                                   validate: (value){
                                     return prov.validateSignupForm(value!, formField.fullName);
                               }),
                               SizedBox(
                                 height: height/30,
                               ),
-                              TextFieldWidget(hintText: "User Name",controller: prov.userNameController,validate: (value){
+                              TextFieldWidget(hintText: "User Name",labelText: "User Name",controller: prov.userNameController,validate: (value){
                                 return prov.validateSignupForm(value!, formField.userName);
                               },),
                               SizedBox(
                                 height: height/30,
                               ),
-                              TextFieldWidget(hintText: "Email",controller: prov.emailController,validate: (value){
+                              TextFieldWidget(hintText: "Email",labelText: "Email",controller: prov.emailController,validate: (value){
                                 return prov.validateSignupForm(value!, formField.email);
                               },),
                               SizedBox(
                                 height: height/30,
                               ),
-                              TextFieldWidget(hintText: "Password",controller: prov.signUpPasswordController,validate: (value){
+                              TextFieldWidget(hintText: "Password",labelText: "Password",controller: prov.signUpPasswordController,validate: (value){
                                 return prov.validateSignupForm(value!, formField.password);
                               },enableObsecureText: true,toggleObsecure: prov.obsecureText,onTapObscure: (){
                                 prov.toggleObsecureText();

@@ -134,7 +134,8 @@ class _FollowUnFollowScreenState extends State<FollowUnFollowScreen> {
     return prov.isLoading
         ? Skeletonizer(
            enabled: true,
-            containersColor: Colors.white.withOpacity(0.1),
+      effect: ShimmerEffect(baseColor: Colors.white.withOpacity(0.05),highlightColor: Colors.grey.withOpacity(0.13),),
+      containersColor: Colors.white.withOpacity(0.05),
             child: ListView.separated(
                 itemBuilder: (context, index) {
                   return UserCard(

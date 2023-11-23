@@ -11,8 +11,9 @@ import '../features/feeds/feeds_screen_provider.dart';
 
 class FeedsCard extends StatelessWidget {
   final Post post;
+  final GestureTapCallback? onTap;
 
-   FeedsCard({Key? key, required this.post}) : super(key: key);
+   FeedsCard({Key? key, required this.post, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +92,6 @@ class FeedsCard extends StatelessWidget {
     );
   }
 
-
   _buildActionBar(double height,double width){
     return Row(
       children: [
@@ -118,7 +118,6 @@ class FeedsCard extends StatelessWidget {
 
   _buildDetails(double height,double width,BuildContext context){
     bool isMoreVisible=true;
-    var prov = Provider.of<FeedsScreenProvider>(context, listen: false);
     return Padding(
       padding:  EdgeInsets.symmetric(horizontal: width/20),
       child: Column(
@@ -131,10 +130,7 @@ class FeedsCard extends StatelessWidget {
           ),
           Visibility(
             visible: isMoreVisible,
-            child: GestureDetector(onTap: (){
-
-              prov.enableDisableMore(post.userId);
-            },child: Text("more",style: RobotoFonts.regular(color: Color(0xff919191),fontSize: width/30)),),
+            child: GestureDetector(onTap: onTap,child: Text("more",style: RobotoFonts.regular(color: Color(0xff919191),fontSize: width/30)),),
           ),
           SizedBox(height: height/60,),
           Text("view all 200 comments",style: RobotoFonts.regular(fontSize: width/30,color: Color(0xffDDDDDD))),

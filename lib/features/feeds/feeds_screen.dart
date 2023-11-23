@@ -43,11 +43,12 @@ class _FeedsScreenState extends State<FeedsScreen> {
             child: prov.isLoading
                 ? Skeletonizer(
                     enabled: true,
-                    containersColor: Colors.grey.withOpacity(0.1),
+                    containersColor: Color(0xff0C0C14),
+                effect: ShimmerEffect(baseColor: Colors.white.withOpacity(0.05),highlightColor: Colors.grey.withOpacity(0.13),),
                 child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       itemBuilder: (context, index) {
-                        Post post=Post(userId: "", imageUrl: "", caption: "", userName: "");
+                        Post post=Post(userId: "", imageUrl: "", caption: "", userName: "test user name");
                         return FeedsCard(
                           post: post,
                         );
@@ -60,7 +61,9 @@ class _FeedsScreenState extends State<FeedsScreen> {
                           itemBuilder: (context, index) {
                             var post = prov.posts[index];
                             return FeedsCard(
-                              post: post,
+                              post: post,onTap: (){
+                              prov.enableDisableMore(post.userId);
+                            },
                             );
                           },
                           itemCount: prov.posts.length,
