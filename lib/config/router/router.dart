@@ -12,7 +12,7 @@ class Routers{
 
   static GoRouter getRoutes(){
     final GoRouter router = GoRouter(
-      initialLocation: "/",
+      initialLocation: "/Home",
       routes: [
         GoRoute(
           path: "/",

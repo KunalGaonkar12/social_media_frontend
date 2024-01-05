@@ -72,12 +72,12 @@ class _FollowUnFollowScreenState extends State<FollowUnFollowScreen> {
                         tabs: [
                           Tab(
                             child: Text(
-                              "All Users(${prov.getLength(prov.allUsers)})",
+                              "All Users(${prov.filteredAllUsers.length})",
                             ),
                           ),
                           Tab(
                             child: Text(
-                                "Following(${prov.getLength(prov.followedUsers)})"),
+                                "Following(${prov.filteredFollowedUsers.length})"),
                           ),
                         ],
                       ),
@@ -89,8 +89,8 @@ class _FollowUnFollowScreenState extends State<FollowUnFollowScreen> {
                       child: Container(
                         child: TabBarView(
                           children: [
-                            _buildUserList(prov, prov.allUsers),
-                            _buildUserList(prov, prov.followedUsers),
+                            _buildUserList(prov, prov.filteredAllUsers),
+                            _buildUserList(prov, prov.filteredFollowedUsers),
                           ],
                         ),
                       ),
@@ -155,26 +155,24 @@ class _FollowUnFollowScreenState extends State<FollowUnFollowScreen> {
             ? ListView.separated(
                 itemBuilder: (context, index) {
                   var user = users[index];
-                  return user.didQueryMatch
-                      ? UserCard(
+                return  UserCard(
                           user: user,
                           onTapDown: () async {
                             var loginProv = Provider.of<LoginProvider>(context, listen: false);
                             await prov.updateFollowUnFollow(
                                 user.id, loginProv.loggedInUser!.id);
                           },
-                        )
-                      : SizedBox.shrink();
+                        );
+                      // : SizedBox.shrink();
                 },
                 separatorBuilder: (context, index) {
-                  return user.didQueryMatch
-                      ? Divider(
+                 return Divider(
                           color: Colors.white10.withOpacity(0.03),
                           thickness: 2,
-                        )
-                      : SizedBox.shrink();
+                        );
+
                 },
-                itemCount: prov.getLength(users))
+                itemCount: users.length)
             : Center(
                 child: Text("No Users",
                     style: RobotoFonts.medium(

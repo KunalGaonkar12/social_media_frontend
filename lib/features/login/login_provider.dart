@@ -27,8 +27,10 @@ class LoginProvider with ChangeNotifier {
     loading = false;
     loggedIn = false;
     obsecureText=true;
-    loginPasswordController.clear();
-    loginEmailController.clear();
+    // loginPasswordController.clear();
+    loginPasswordController.text="kunal123";
+    loginEmailController.text="kunalgaonkar102@gmail.com";
+    // loginEmailController.clear();
   }
 
 

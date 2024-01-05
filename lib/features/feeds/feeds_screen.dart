@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:social_media/features/feeds/feeds_screen_provider.dart';
 import 'package:social_media/features/login/login_provider.dart';
+import 'package:social_media/widgets/multiOptionAlert.dart';
 
 import '../../config/colorpalette.dart';
 import '../../config/font/font.dart';
@@ -109,7 +110,20 @@ class _FeedsScreenState extends State<FeedsScreen> {
                 ),
                 GestureDetector(
                   onTap: (){
-                    context.go("/");
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return MultiOptionAlertDialog(
+                            title: "Logout!",
+                            content: "Do you want to logout?",
+                            primaryActionText: "Yes",
+                            secondaryActionText: "No",onPressedPrimary: (){
+                            context.go("/");
+                          },onPressedSecondary: (){
+                            context.pop();
+                          },);
+                        });
+
                   },
                   child: SvgPicture.asset("assets/images/turnoff.svg",
                       height: height / 34),

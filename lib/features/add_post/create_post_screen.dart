@@ -12,14 +12,15 @@ import 'create_post_provider.dart';
 
 class CreatePostScreen extends StatefulWidget {
   late TabController bottomTabController;
-   CreatePostScreen({Key? key,required this.bottomTabController}) : super(key: key);
+
+  CreatePostScreen({Key? key, required this.bottomTabController})
+      : super(key: key);
 
   @override
   State<CreatePostScreen> createState() => _CreatePostScreenState();
 }
 
 class _CreatePostScreenState extends State<CreatePostScreen> {
-
   //To set the initial values
   @override
   void initState() {
@@ -39,6 +40,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         backgroundColor: ColorPalette.themeColor,
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildSelectedImageDisplay(height, width, prov),
               SizedBox(
@@ -48,11 +50,18 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               SizedBox(
                 height: height / 30,
               ),
-              Text(
-                "Tags",
-                style: RobotoFonts.medium(
-                    color: Colors.white.withOpacity(0.5), fontSize: 15),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width / 20),
+                child: Text(
+                  "Tags",
+                  style: RobotoFonts.medium(
+                      color: Colors.white.withOpacity(0.5), fontSize: 15),
+                ),
               ),
+              SizedBox(
+                height: height / 55,
+              ),
+              _buildTaggedList(prov, height, width),
               SizedBox(
                 height: height / 30,
               ),
@@ -63,6 +72,34 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     });
   }
 
+//To build horizontal list of tagged users
+  _buildTaggedList(
+    CreatePostProvider prov,
+    double height,
+    double width,
+  ) {
+    return Padding(
+        padding: EdgeInsets.symmetric(horizontal: width / 20),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Container(
+              child: Row(
+            children: prov.followedUsers
+                .map((e) => e.isFollowed
+                    ? Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: Text(
+                          "${e.userName} ",
+                          style: RobotoFonts.medium(
+                              color: Colors.white.withOpacity(0.5),
+                              fontSize: 12),
+                        ),
+                      )
+                    : Container())
+                .toList(),
+          )),
+        ));
+  }
 
   //To component display the selected image and perform functions such as add image from gallery and camera ,also to tag people
   _buildSelectedImageDisplay(
@@ -127,7 +164,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       );
     });
   }
-
 
   //To display all the followed users so that we can tag them in post
   void _openBottomSheet(BuildContext context, CreatePostProvider prov) {
@@ -263,7 +299,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     );
   }
 
-
   //component to add caption to the post
   _buildCaptionField(CreatePostProvider prov, double height, double width) {
     return Padding(
@@ -313,7 +348,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     );
   }
 
-
   //To create app bar
   _buildAppBar(CreatePostProvider prov, double height, double width) {
     return PreferredSize(
@@ -328,7 +362,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               leading: IconButton(
                   onPressed: () {
                     widget.bottomTabController.animateTo(0);
-
                   },
                   icon: const Icon(
                     Icons.clear,
@@ -352,13 +385,16 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                       }
                       if (prov.postCreated) {
                         widget.bottomTabController.animateTo(0);
-
                       }
                     },
-                    child: prov.loading?CircularProgressIndicator(color: Colors.white,):Text("Post",
-                        style: RobotoFonts.medium(
-                            color: ColorPalette.primaryColor,
-                            fontSize: width / 20)),
+                    child: prov.loading
+                        ? CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : Text("Post",
+                            style: RobotoFonts.medium(
+                                color: ColorPalette.primaryColor,
+                                fontSize: width / 20)),
                   ),
                 )
               ],

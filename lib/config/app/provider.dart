@@ -1,5 +1,6 @@
 import 'package:provider/single_child_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:social_media/features/profile/profile_provider.dart';
 import '../../features/add_post/create_post_provider.dart';
 import '../../features/feeds/feeds_screen_provider.dart';
 import '../../features/follow_unfollow/follow_unfollow_provider.dart';
@@ -17,7 +18,7 @@ class Providers {
       ChangeNotifierProvider(create: (context) => FollowUnFollowProvider()),
       ChangeNotifierProvider(create: (context) => CreatePostProvider()),
       ChangeNotifierProvider(create: (context) => FeedsScreenProvider()),
-
+      ChangeNotifierProvider(create: (context) => ProfileProvider()),
     ];
     return _providers;
   }

@@ -1,10 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+import 'package:social_media/features/profile/profile_screen.dart';
 import '../../config/colorpalette.dart';
 import '../add_post/create_post_screen.dart';
 import '../feeds/feeds_screen.dart';
 import '../follow_unfollow/follow_unfollow_screen.dart';
+import '../login/login_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   String? id;
@@ -25,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin<H
   @override
   void initState() {
     super.initState();
-    bottomTabController = TabController(length: 5, vsync: this,initialIndex: 0);
+    bottomTabController = TabController(length: 4, vsync: this,initialIndex: 3);
     bottomTabController.addListener(() {
       if(kDebugMode){
         print("HomeScreen Current Index ${bottomTabController.index}");
@@ -53,12 +56,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin<H
 
   //to build the body with all functionality  screens
   _buildBody(){
+    var loginProv = Provider.of<LoginProvider>(context, listen: false);
     return TabBarView(controller: bottomTabController,physics:const NeverScrollableScrollPhysics(),children: <Widget>[
       FeedsScreen(),
       FollowUnFollowScreen(),
       CreatePostScreen(bottomTabController: bottomTabController),
-Center(child: Text("Page 4",style: TextStyle(color: Colors.white),)),
-Center(child: Text("Page 5",style: TextStyle(color: Colors.white),)),
+    ProfileScreen(loginProv.loggedInUser),
+// Center(child: Text("Page 4",style: TextStyle(color: Colors.white),)),
     ]);
   }
   
@@ -71,6 +75,9 @@ Center(child: Text("Page 5",style: TextStyle(color: Colors.white),)),
       ),
       height: height/11,
       child: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
+
+        backgroundColor: Color(0xff0C0C13),
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
           backgroundColor: Color(0xff0C0C13),
@@ -89,13 +96,13 @@ Center(child: Text("Page 5",style: TextStyle(color: Colors.white),)),
               label: '',
               backgroundColor: Color(0xff0C0C13)
           ),
-          BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                 controller.index==3?"assets/images/follower_selected.svg":"assets/images/follower.svg"
-              ),
-              label: '',
-              backgroundColor: Color(0xff0C0C13),
-          ),
+          // BottomNavigationBarItem(
+          //     icon: SvgPicture.asset(
+          //        controller.index==3?"assets/images/follower_selected.svg":"assets/images/follower.svg"
+          //     ),
+          //     label: '',
+          //     backgroundColor: Color(0xff0C0C13),
+          // ),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                controller.index==4?"assets/images/profile_selected.svg":"assets/images/profile.svg"
@@ -105,9 +112,10 @@ Center(child: Text("Page 5",style: TextStyle(color: Colors.white),)),
           ),
         ],
         currentIndex: _currentIndex,
-        enableFeedback: false,
+
         iconSize: height/24,
         selectedItemColor:selectedColor,
+        selectedIconTheme: IconThemeData(opacity: 0.0),
         onTap: (value){
           setState(() {
             _currentIndex=value;
